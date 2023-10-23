@@ -3,9 +3,7 @@ package com.example.tarjeta_de_presentacion
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -16,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -36,14 +33,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import com.example.tarjeta_de_presentacion.ui.theme.Tarjeta_de_presentacionTheme
-import java.time.Clock
 
 
 class MainActivity : ComponentActivity() {
@@ -172,8 +165,7 @@ fun Data(modifier: Modifier = Modifier, context: Context){
     Column(
             verticalArrangement = Arrangement.Center
         ) {
-            Row(
-            ) {
+            Row{
                 Image(
                     painter = phone,
                     contentDescription = null
@@ -182,7 +174,6 @@ fun Data(modifier: Modifier = Modifier, context: Context){
                     text = phoneText ,
                     modifier = modifier
                         .clickable {
-                            // Llama al número
                             val intent = Intent(Intent.ACTION_DIAL)
                             intent.data = Uri.parse("tel:$phoneText")
                             context.startActivity(intent)
@@ -203,7 +194,6 @@ fun Data(modifier: Modifier = Modifier, context: Context){
                     text = "linkeding/JeremyZamalloa",
                     modifier = Modifier
                         .clickable {
-                            // Abre el link en el navegador
                             val intent = Intent(Intent.ACTION_VIEW)
                             intent.data = Uri.parse(link)
                             context.startActivity(intent)
@@ -223,7 +213,6 @@ fun Data(modifier: Modifier = Modifier, context: Context){
                     text = "jeremyzamalloaarmas@gmail.com",
                     modifier = Modifier
                         .clickable {
-                            // Abre el correo para enviar un email
                             val intent = Intent(Intent.ACTION_SENDTO)
                             intent.data = Uri.parse("mailto:$emailAddress")
                             context.startActivity(intent)
