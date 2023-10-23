@@ -1,12 +1,17 @@
 package com.example.tarjeta_de_presentacion
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.tarjeta_de_presentacion.ui.theme.Tarjeta_de_presentacionTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +49,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CardPresentation()
+                    CardPresentation(context = this)
                 }
             }
         }
@@ -50,18 +57,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun CardPresentation(modifier: Modifier = Modifier) {
-
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Logo(
-
+fun CardPresentation(context: Context, modifier: Modifier = Modifier) {
+    val fondo = painterResource(R.drawable.fondo2)
+    Box(modifier) {
+        Image(
+            painter = fondo,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            alpha = 0.5F
         )
-        Data(
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Logo(
 
-        )
+            )
+            Data(
+                context = applicationContext
+            )
+        }
     }
     
 }
@@ -78,7 +93,7 @@ fun CardPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            CardPresentation()
+            CardPresentation(context = this)
         }
     }
 }
@@ -103,18 +118,23 @@ fun Logo(modifier: Modifier = Modifier) {
     }
 
     Column(
-                modifier = modifier.fillMaxWidth().padding(
-                    bottom = 150.dp
-                ),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(
+                        top = 50.dp,
+                        bottom = 150.dp
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
                     painter = logo,
                     contentDescription = null,
-                    modifier = Modifier.size(150.dp)
+                    modifier = Modifier
+                        .size(150.dp)
                         .border(
                             BorderStroke(borderWidth, rainbowColorsBrush),
-                    CircleShape)
+                            CircleShape
+                        )
                         .padding(borderWidth)
                         .clip(CircleShape)
                 )
@@ -130,26 +150,32 @@ fun Logo(modifier: Modifier = Modifier) {
                     text = "Técnico Soporte Informático"
                 )
             }
-
-    
-
 }
 
 @Composable
-fun Data(modifier: Modifier = Modifier){
+fun Data(context: Context, modifier: Modifier = Modifier){
     val phone = painterResource(R.drawable.phone)
     val share = painterResource(R.drawable.share)
     val email = painterResource(R.drawable.email)
+    val phoneText = "+34 633143863"
     Column(
             verticalArrangement = Arrangement.Center
         ) {
-            Row {
+            Row(
+                modifier = Modifier
+                    .clickable {
+                        // Abrir la aplicación de teléfono para llamar al número de teléfono
+                        val intent = Intent(Intent.ACTION_DIAL)
+                        intent.data = Uri.parse("tel:$phoneText")
+                        context.startActivity(intent)
+                    }
+            ) {
                 Image(
                     painter = phone,
                     contentDescription = null
                 )
                 Text(
-                    text = "+34 633143863",
+                    text = phoneText,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(
