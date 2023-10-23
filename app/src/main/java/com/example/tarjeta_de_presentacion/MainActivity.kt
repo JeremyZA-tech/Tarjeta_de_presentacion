@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun CardPresentation(modifier: Modifier = Modifier) {
     Column(
-       // modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Logo(modifier = Modifier.weight(1f))
         Data(modifier = modifier
