@@ -1,5 +1,6 @@
 package com.example.tarjeta_de_presentacion
 
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -23,9 +24,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.tarjeta_de_presentacion.ui.theme.Tarjeta_de_presentacionTheme
 
 class MainActivity : ComponentActivity() {
@@ -83,13 +86,11 @@ fun CardPreview() {
 fun Logo(modifier: Modifier = Modifier) {
     val logo = painterResource(R.drawable.logo)
 
-        Box(
-            /*modifier = Modifier.padding(
-                bottom = 200.dp
-            )*/
-        ) {
+
             Column(
-                modifier = modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth().padding(
+                    bottom = 150.dp
+                ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -98,13 +99,18 @@ fun Logo(modifier: Modifier = Modifier) {
                     modifier = Modifier.size(150.dp)
                 )
                 Text(
-                    text = "Jeremy Zamalloa Armas"
+                    text = "Jeremy Zamalloa Armas",
+                    modifier = Modifier
+                        .padding(15.dp),
+                    fontSize = 30.sp,
+                    fontFamily = FontFamily.Cursive
+
                 )
                 Text(
-                    text = "Desarollo Software"
+                    text = "Técnico Soporte Informático"
                 )
             }
-        }
+
     
 
 }
@@ -115,10 +121,7 @@ fun Data(modifier: Modifier = Modifier){
     val share = painterResource(R.drawable.share)
     val email = painterResource(R.drawable.email)
 
-    Box(
 
-
-    ) {
         Column(
             verticalArrangement = Arrangement.Center
         ) {
@@ -127,7 +130,9 @@ fun Data(modifier: Modifier = Modifier){
                     painter = phone,
                     contentDescription = null
                 )
-                Text(text = "Telefono")
+                Text(
+                    text = "+34 633143863"
+                )
             }
             Row {
                 Image(
@@ -141,9 +146,9 @@ fun Data(modifier: Modifier = Modifier){
                     painter = email,
                     contentDescription = null
                 )
-                Text(text = "email")
+                Text(text = "jeremyzamalloaarmas@gmail.com")
             }
         }
-    }
+
 
 }
