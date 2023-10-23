@@ -5,12 +5,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,16 +47,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun CardPresentation(modifier: Modifier = Modifier) {
+
     Column(
-        modifier = modifier.fillMaxSize()
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Logo(modifier = Modifier.weight(1f))
-        Data(modifier = modifier
-            .fillMaxWidth()
-            .weight(1f)
-            .padding(bottom = 20.dp))
+        Logo(
+
+        )
+        Data(
+
+        )
     }
+    
 }
+
 
 
 
@@ -59,76 +69,81 @@ fun CardPresentation(modifier: Modifier = Modifier) {
 @Composable
 fun CardPreview() {
     Tarjeta_de_presentacionTheme {
-        CardPresentation()
+
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            CardPresentation()
+        }
     }
 }
 
 @Composable
 fun Logo(modifier: Modifier = Modifier) {
-    val image = painterResource(R.drawable.logo)
-    Column(
-        modifier = modifier
-    ) {
-        Image(
-            painter = image,
-            contentDescription = null,
-            modifier = Modifier
-                .size(150.dp)
-        )
-        Text(
-            text = "Jeremy Zamalloa Armas",
-            textAlign = TextAlign.Center,
-            modifier = modifier.padding(5.dp)
-        )
-        Text(
-            text = "Desarrollador de Software",
-            modifier = modifier.padding(5.dp)
-        )
-    }
+    val logo = painterResource(R.drawable.logo)
+
+        Box(
+            /*modifier = Modifier.padding(
+                bottom = 200.dp
+            )*/
+        ) {
+            Column(
+                modifier = modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = logo,
+                    contentDescription = null,
+                    modifier = Modifier.size(150.dp)
+                )
+                Text(
+                    text = "Jeremy Zamalloa Armas"
+                )
+                Text(
+                    text = "Desarollo Software"
+                )
+            }
+        }
+    
+
 }
 
 @Composable
 fun Data(modifier: Modifier = Modifier){
     val phone = painterResource(R.drawable.phone)
-    val email = painterResource(R.drawable.email)
     val share = painterResource(R.drawable.share)
+    val email = painterResource(R.drawable.email)
 
-    Column(
-       modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+
+
     ) {
-        Row(
-            horizontalArrangement = Arrangement.Center
+        Column(
+            verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = phone,
-                contentDescription = null,
-            )
-            Text(
-                text = "Telefono",
-                modifier = modifier.padding(5.dp)
-
-            )
-        }
-        Row {
-            Image(
-                painter = share,
-                contentDescription = null,
-            )
-            Text(
-                text = "Redes sociales",
-                modifier = modifier.padding(5.dp)
-            )
-        }
-        Row {
-            Image(
-                painter = email,
-                contentDescription = null,
-            )
-            Text(
-                text = "Email",
-                modifier = modifier.padding(5.dp)
-            )
+            Row {
+                Image(
+                    painter = phone,
+                    contentDescription = null
+                )
+                Text(text = "Telefono")
+            }
+            Row {
+                Image(
+                    painter = share,
+                    contentDescription = null
+                )
+                Text(text = "redes sociales")
+            }
+            Row {
+                Image(
+                    painter = email,
+                    contentDescription = null
+                )
+                Text(text = "email")
+            }
         }
     }
+
 }
