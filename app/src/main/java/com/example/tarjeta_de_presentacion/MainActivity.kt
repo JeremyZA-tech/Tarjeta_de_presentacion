@@ -3,7 +3,9 @@ package com.example.tarjeta_de_presentacion
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,13 +33,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import com.example.tarjeta_de_presentacion.ui.theme.Tarjeta_de_presentacionTheme
+import java.time.Clock
 
 
 class MainActivity : ComponentActivity() {
@@ -49,15 +56,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CardPresentation(context = this)
+                    CardPresentation()
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun CardPresentation(context: Context, modifier: Modifier = Modifier) {
+fun CardPresentation( modifier: Modifier = Modifier) {
     val fondo = painterResource(R.drawable.fondo2)
     Box(modifier) {
         Image(
@@ -74,8 +82,9 @@ fun CardPresentation(context: Context, modifier: Modifier = Modifier) {
 
             )
             Data(
-                context = applicationContext
+                modifier = modifier, context = LocalContext.current
             )
+
         }
     }
     
@@ -93,7 +102,7 @@ fun CardPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            CardPresentation(context = this)
+            CardPresentation()
         }
     }
 }
@@ -153,34 +162,36 @@ fun Logo(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun Data(context: Context, modifier: Modifier = Modifier){
+fun Data(modifier: Modifier = Modifier, context: Context){
     val phone = painterResource(R.drawable.phone)
     val share = painterResource(R.drawable.share)
     val email = painterResource(R.drawable.email)
-    val phoneText = "+34 633143863"
+    val phoneText = "+34633143863"
+    val link = "https://www.linkedin.com/in/jeremy-zamalloa-armas-81a83416a"
+    val emailAddress = "jeremyzamalloaarmas@gmail.com"
     Column(
             verticalArrangement = Arrangement.Center
         ) {
             Row(
-                modifier = Modifier
-                    .clickable {
-                        // Abrir la aplicación de teléfono para llamar al número de teléfono
-                        val intent = Intent(Intent.ACTION_DIAL)
-                        intent.data = Uri.parse("tel:$phoneText")
-                        context.startActivity(intent)
-                    }
             ) {
                 Image(
                     painter = phone,
                     contentDescription = null
                 )
                 Text(
-                    text = phoneText,
-                    modifier = Modifier
+                    text = phoneText ,
+                    modifier = modifier
+                        .clickable {
+                            // Llama al número
+                            val intent = Intent(Intent.ACTION_DIAL)
+                            intent.data = Uri.parse("tel:$phoneText")
+                            context.startActivity(intent)
+                        }
                         .align(Alignment.CenterVertically)
                         .padding(
                             start = 5.dp
                         )
+
                 )
             }
             Row {
@@ -189,8 +200,14 @@ fun Data(context: Context, modifier: Modifier = Modifier){
                     contentDescription = null
                 )
                 Text(
-                    text = "redes sociales",
+                    text = "linkeding/JeremyZamalloa",
                     modifier = Modifier
+                        .clickable {
+                            // Abre el link en el navegador
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(link)
+                            context.startActivity(intent)
+                        }
                         .align(Alignment.CenterVertically)
                         .padding(
                             start = 5.dp
@@ -205,6 +222,12 @@ fun Data(context: Context, modifier: Modifier = Modifier){
                 Text(
                     text = "jeremyzamalloaarmas@gmail.com",
                     modifier = Modifier
+                        .clickable {
+                            // Abre el correo para enviar un email
+                            val intent = Intent(Intent.ACTION_SENDTO)
+                            intent.data = Uri.parse("mailto:$emailAddress")
+                            context.startActivity(intent)
+                        }
                         .align(Alignment.CenterVertically)
                         .padding(
                             start = 5.dp
